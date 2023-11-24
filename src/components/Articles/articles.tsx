@@ -1,33 +1,30 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useEffect, useState} from "react"
-import {ArticlesService} from "../../services/articles-service";
+import {Article} from "../../hooks/contracts";
+import {useArticles} from "../../hooks/useArticles.hooks";
+import ArticleForm from "./articleForm";
+import {Modal, Spinner} from "react-bootstrap";
 
-interface Articles {
-    userId: number
-    id: number
-    title: string
-    body: string
-}
 function Articles() {
-    const [articles, setArticles ] = useState([])
-    useEffect(() => {
+    const articles = useArticles()
+    const [isOpenCreateModal, setIsOpenCreateModal] = useState(false)
 
-        const getArticles = async () => {
-            const articles = await ArticlesService.getAll()
-            setArticles(articles)
-        }
-
-        getArticles()
-    }, [])
+    const handleClose = () => setIsOpenCreateModal(false);
+    const handleShow = () => setIsOpenCreateModal(true);
+    if (articles.error) return <div>Error!</div>
+    if (articles.isLoading) return <Spinner animation="border" />
 
     return (
-        <div>Articles
-            {articles.map((a: Articles) => {
+        <>
+            <button onClick={handleShow}>Add Article</button>
+            {articles.data != null ? (
+                articles.data.map((a: Article) => {
                 return (
                     <div>{a.title}</div>
                 )
-            })}
-        </div>
+            })) : <div>Articles is empty</div>}
+            {isOpenCreateModal && <ArticleForm handleClose={handleClose}/>}
+        </>
     );
 }
 
