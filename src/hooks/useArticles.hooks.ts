@@ -1,13 +1,13 @@
 import {useQuery, UseQueryResult} from "@tanstack/react-query";
 import {ArticlesService} from "../services/articles-service";
-import {Article} from "./contracts";
+import {IArticle} from "../app/contracts";
 
 enum ArticleKeys {
     ARTICLES = 'articles',
     GET_BY_ID = 'get-articles-by-id',
 }
 
-function useArticles(): UseQueryResult<Article[]> {
+function useArticles(): UseQueryResult<IArticle[]> {
     return useQuery([ArticleKeys.ARTICLES], () => ArticlesService.getAll())
 }
 

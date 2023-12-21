@@ -1,0 +1,18 @@
+.cardLightTheme div {
+    background-color: lavender;
+    color: darkgreen;
+}
+
+.cardDarkTheme div {
+    background-color: black;
+    color: white;
+}
+
+.cardDefaultTheme div {
+    background-color: darksalmon;
+    color: midnightblue;
+}
+
+.photo-card {
+    text-align: start;
+}

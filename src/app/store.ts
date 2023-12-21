@@ -1,8 +1,12 @@
 import {configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/toolkit';
-import {reducer as addArticleReducer} from '../features/articles/articlesSlice';
+import {reducer as articleReducer} from '../features/articles/articlesSlice';
+import {reducer as userReducer} from '../features/users/usersSlice'
+import {reducer as photoReducer} from '../features/photos/photosSlice'
 
 const reducers = combineReducers({
-  articles: addArticleReducer,
+  articles: articleReducer,
+  users: userReducer,
+  photos: photoReducer,
 })
 
 export const store = configureStore({

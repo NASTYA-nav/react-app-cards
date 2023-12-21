@@ -1,37 +1,29 @@
 import React, {useState} from "react";
-import {IArticle} from "../../app/contracts";
+import {IPhoto} from "../../app/contracts";
 import {Button, Form, Modal} from "react-bootstrap";
 import {useActions} from "../../app/hooks";
 
-interface ArticleFormProps {
+interface PhotoFormProps {
     handleClose: () => void
-    article?: IArticle
-    articleCount: number
+    photo?: IPhoto
+    photosCount: number
     modalTitle: string
 }
 
-const ArticleForm: React.FC<ArticleFormProps> = (props: ArticleFormProps) => {
+const PhotoForm: React.FC<PhotoFormProps> = (props: PhotoFormProps) => {
 
-    const [title, setTitle] = useState(props.article ? props.article.title : '')
-    const [body, setBody] = useState(props.article ? props.article.body : '')
-    const {addArticleToStore, updateArticleFromStore} = useActions()
-    // const {mutate} = useMutation(['create-article'], (article: Article) => ArticlesService.create(article),
-    //     {
-    //         onSuccess(){
-    //             alert('Article is created')
-    //         }
-    //     })
-
+    const [title, setTitle] = useState(props.photo ? props.photo.title : '')
+    const [url, setUrl] = useState(props.photo ? props.photo.url : '')
+    const {addPhotoToStore, updatePhotoFromStore} = useActions()
 
     const submitHandler = (e: any) => {
         e.preventDefault()
-        const newArticle = {
-            body: body,
+        const newPhoto = {
             title: title,
-            id: (props.article && props.articleCount) ? props.article?.id : props.articleCount + 1,
-            userId: 11
+            url: url,
+            id: (props.photo && props.photosCount) ? props.photo?.id : props.photosCount + 1,
         }
-        props.article ? updateArticleFromStore(newArticle) : addArticleToStore(newArticle)
+        props.photo ? updatePhotoFromStore(newPhoto) : addPhotoToStore(newPhoto)
         props.handleClose()
     }
 
@@ -57,14 +49,14 @@ const ArticleForm: React.FC<ArticleFormProps> = (props: ArticleFormProps) => {
                         className='mt-2'
                         as="textarea"
                         rows={4}
-                        value={body}
+                        value={url}
                         onChange={e => {
-                            setBody(e.target.value)
+                            setUrl(e.target.value)
                         }}
-                        placeholder='text'/>
+                        placeholder='url'/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={submitHandler} disabled={(!body || !title)}>
+                    <Button variant="secondary" onClick={submitHandler} disabled={(!url || !title)}>
                         Save
                     </Button>
                 </Modal.Footer>
@@ -73,4 +65,4 @@ const ArticleForm: React.FC<ArticleFormProps> = (props: ArticleFormProps) => {
     )
 }
 
-export default ArticleForm
+export default PhotoForm
